@@ -6,7 +6,7 @@ Created on Thu Nov 25 23:02:33 2021
 """
 
 ''' Change this file_path to your file location '''
-file_path = 'C:/Centennial notes/Fall2021/309-Data Warehousing/Grp Project/Main/Bicycle_Thefts.csv';
+file_path = 'D:\CentennialCollege\Fall2021\COMP309_DataWarehouses\FinalGroupProject\Bicycle_Thefts.csv';
 
 #%% 1. Data Exploration
 import pandas as pd
@@ -210,6 +210,20 @@ scaler.fit(data_Bicycle_final[numeric_columns])
 
 #scale selected data
 data_Bicycle_final[numeric_columns] = scaler.transform(data_Bicycle_final[numeric_columns])
+
+
+# Plot correlation heatmap to visualize relation between numeric columns and 'Status' target variable
+import matplotlib.pyplot as plt
+import seaborn as sns
+columns_for_correlation = numeric_columns.copy()
+columns_for_correlation.append("Status")
+plt.figure(figsize=(12,10))
+cor = data_Bicycle_final[columns_for_correlation].corr()
+sns.heatmap(cor, annot=True, cmap=plt.cm.Reds)
+plt.show()
+
+# since the correlation is not significant, we drop those columns
+data_Bicycle_final = data_Bicycle_final.drop(numeric_columns, axis=1)
 
 
 # Prepare the data for the model build as X (inputs, predictor) and Y(output, predicted)
